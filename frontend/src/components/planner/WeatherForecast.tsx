@@ -106,11 +106,7 @@ export default function WeatherForecast({ forecast, unit = "metric" }: Props) {
     },
   ];
 
-  if (
-    !forecast ||
-    !Array.isArray(forecast) ||
-    forecast.every((w) => w.temp === "N/A" || w.date === "N/A")
-  ) {
+  if (!forecast || forecast.length === 0) {
     return (
       <Card className="text-center bg-white/10 border border-white/10 text-white">
         <CardHeader>

@@ -65,12 +65,4 @@ def get_weather_forecast(destination_name: str, units: str = "metric"):
 
 
 def generate_empty_weather():
-    return [
-        {
-            "date": "N/A",
-            "temp": "N/A",
-            "humidity": "N/A",
-            "icon": "01d",
-            "description": "Unavailable",
-        }
-    ] * 7
+    return []
