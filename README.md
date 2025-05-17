@@ -2,7 +2,7 @@
 
 AI-powered travel inspiration based on your uploaded photos. Built with:
 
-* 🌐 **Frontend**: Next.js 14 (App Router, TypeScript, Tailwind CSS, shadcn/ui)
+* 🌐 **Frontend**: Next.js 15 (App Router, TypeScript, Tailwind CSS, shadcn/ui)
 * 🔙 **Backend**: Flask with Imagga scene recognition + OpenWeather API
 * 🐳 **Deployment**: Vercel (frontend) + Render (backend)
 
@@ -22,7 +22,7 @@ AI-powered travel inspiration based on your uploaded photos. Built with:
 
 ### Tech Stack
 
-* [Next.js 14+](https://nextjs.org/) (App Router)
+* [Next.js 15+](https://nextjs.org/) (App Router)
 * TypeScript
 * Tailwind CSS + [shadcn/ui](https://ui.shadcn.com/)
 * Fetch API for backend integration
