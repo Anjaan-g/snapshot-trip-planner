@@ -89,7 +89,6 @@ export default function HomePage() {
 					>
 						<DestinationInfo
 							data={result.destination}
-							scene={result.scene_type}
 							onShowMore={result.similar?.length > 0 ? () => setShowSimilar(true) : undefined}
 						/>
 						{result.weather?.length > 0 && <WeatherForecast forecast={result.weather} />}

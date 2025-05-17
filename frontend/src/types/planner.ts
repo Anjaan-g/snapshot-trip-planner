@@ -8,7 +8,7 @@ export interface Destination {
 	image: string
 }
 
-interface WeatherDay {
+export interface WeatherDay {
 	date: string // ISO string
 	description: string // "Clear", "Rain", etc.
 	temp: number // Celsius

@@ -90,7 +90,7 @@ export default function WeatherForecast({ forecast, unit = "metric" }: Props) {
 		dataLabels: {
 			enabled: true,
 			style: { colors: ["#111"] },
-			formatter: (val) => Math.round(val),
+			formatter: (val) => Math.round(Number(val)),
 		},
 	}
 

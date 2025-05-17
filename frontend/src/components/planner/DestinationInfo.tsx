@@ -6,11 +6,10 @@ import { Button } from "@/components/ui/button"
 
 interface Props {
 	data: Destination
-	scene: string
 	onShowMore?: () => void
 }
 
-export default function DestinationInfo({ data, scene, onShowMore }: Props) {
+export default function DestinationInfo({ data, onShowMore }: Props) {
 	return (
 		<Card className="bg-white backdrop-blur border border-white/10 max-w-4xl mx-auto  rounded-2xl shadow-lg">
 			<CardHeader>
