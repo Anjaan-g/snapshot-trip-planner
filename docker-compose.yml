@@ -1,0 +1,53 @@
+services:
+    backend:
+        build: ./backend
+        working_dir: /backend
+        volumes:
+            - ./backend:/backend
+            - ./backend/static/uploads:/backend/static/uploads
+            - ./backend/metadata.db:/backend/metadata.db
+        ports:
+            - "5000:5000"
+        command: flask run --host=0.0.0.0 --port=5000 --reload
+        environment:
+            - FLASK_ENV=development
+            - OPENWEATHER_API_KEY=${OPENWEATHER_API_KEY}
+        env_file:
+            - ./backend/.env
+        networks:
+            - app-network
+
+    frontend:
+        build: ./frontend
+        working_dir: /frontend
+        volumes:
+            - ./frontend:/frontend
+            - /frontend/node_modules # Add this to prevent overwriting node_modules
+            - /frontend/.next # Add this to prevent overwriting .next directory
+        ports:
+            - "3000:3000"
+        environment:
+            - NEXT_PUBLIC_BACKEND_URL=http://localhost:5000
+            - WATCHPACK_POLLING=true # Enable polling for file changes
+            - CHOKIDAR_USEPOLLING=true # Enable polling for chokidar
+        command: npm run dev
+        depends_on:
+            - backend
+        networks:
+            - app-network
+
+    nginx:
+        image: nginx:alpine
+        volumes:
+            - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+        ports:
+            - "8000:80"
+        depends_on:
+            - frontend
+            - backend
+        networks:
+            - app-network
+
+networks:
+    app-network:
+        driver: bridge
