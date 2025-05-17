@@ -498,15 +498,21 @@ def get_destination(scene_type: str) -> dict:
     return random.choice(DESTINATIONS[scene_type])
 
 
-def get_similar_destinations(scene_type: str) -> list:
-    """
-    Returns 3 random destinations for the same scene type, sorted by rank
-    """
-    if scene_type not in DESTINATIONS:
-        return []
+def get_similar_destinations(scene_type: str, exclude: str = None):
+    candidates = DESTINATIONS.get(scene_type, [])
 
-    return sorted(
-        random.sample(DESTINATIONS[scene_type], 3),
-        key=lambda x: x["rank"],
-        reverse=True,
-    )
+    # Exclude the top destination by name
+    filtered = [
+        dest for dest in candidates if dest["name"].lower() != (exclude or "").lower()
+    ]
+
+    # Optional: shuffle or re-rank
+    return sorted(filtered, key=lambda d: d["rank"])[:3]
+
+
+def get_all_destinations():
+    all_destinations = []
+    for scene_type, destinations in DESTINATIONS.items():
+        for dest in destinations:
+            all_destinations.append({**dest, "scene_type": scene_type})
+    return all_destinations
