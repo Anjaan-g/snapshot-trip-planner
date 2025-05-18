@@ -76,7 +76,7 @@ export default function UploadForm({
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onClick={() => inputRef.current?.click()}
-        className={`relative cursor-pointer border-2 border-dashed rounded-lg p-6 max-w-3xl flex flex-col items-center justify-center text-gray-400 transition
+        className={`relative cursor-pointer border-2 border-dashed rounded-lg p-6 max-w-4xl flex flex-col items-center justify-center text-gray-400 transition
           			${
                   dragOver
                     ? "border-pink-500 bg-pink-50/20 text-pink-400"
