@@ -31,14 +31,22 @@ export default function UploadForm({
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [dragOver, setDragOver] = useState(false);
   const [preview, setPreview] = useState<string | null>(null);
+  const MAX_FILE_SIZE_MB = 10 * 1024 * 1024;
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selected = e.target.files?.[0];
-    if (selected) {
-      onFileSelect(selected);
+    const file = e.target.files?.[0];
+
+    if (!file) return;
+
+    if (file) {
+      if (file.size > MAX_FILE_SIZE_MB) {
+        alert("File size exceeds 10MB");
+        return;
+      }
+      onFileSelect(file);
       const reader = new FileReader();
       reader.onloadend = () => setPreview(reader.result as string);
-      reader.readAsDataURL(selected);
+      reader.readAsDataURL(file);
     }
   };
 
@@ -138,14 +146,16 @@ export default function UploadForm({
       </div>
 
       <div className="mt-6 flex justify-center gap-4">
-        <Button
-          onClick={onUpload}
-          disabled={uploading || !file || !!result}
-          className="flex items-center gap-2"
-        >
-          <UploadCloud />
-          {uploading ? "Uploading..." : "Analyze Image"}
-        </Button>
+        {!result && (
+          <Button
+            onClick={onUpload}
+            disabled={uploading || !file || !!result}
+            className="flex items-center gap-2"
+          >
+            <UploadCloud />
+            {uploading ? "Uploading..." : "Analyze Image"}
+          </Button>
+        )}
 
         <Button
           variant="outline"
@@ -163,7 +173,7 @@ export default function UploadForm({
             onClick={handleClear}
             className="text-sm text-red-500 hover:text-red-700"
           >
-            ❌ Clear selection
+            ❌ Try With Another Image
           </Button>
         )}
       </div>
