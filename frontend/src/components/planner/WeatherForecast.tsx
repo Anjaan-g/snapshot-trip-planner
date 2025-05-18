@@ -50,6 +50,9 @@ export default function WeatherForecast({ forecast, unit = "metric" }: Props) {
   const barColors = temps.map(getBarColor);
 
   const options: ApexCharts.ApexOptions = {
+    legend: {
+      show: false,
+    },
     chart: {
       type: "bar",
       toolbar: { show: false },
@@ -139,7 +142,7 @@ export default function WeatherForecast({ forecast, unit = "metric" }: Props) {
 
         {/* Icon/Label Grid */}
         <div
-          className="grid gap-4 mt-4 text-center max-w-4xl ms-8 px-4"
+          className="grid gap-3 mt-2 text-center max-w-4xl ms-8 px-4"
           style={{
             gridTemplateColumns: `repeat(${forecast.length}, minmax(0, 1fr))`,
           }}
@@ -164,9 +167,9 @@ export default function WeatherForecast({ forecast, unit = "metric" }: Props) {
               >
                 <div className="text-2xl">{emoji}</div>
                 {/* {getIcon(day.description)} */}
-                <p className="font-medium">
+                {/* <p className="font-medium">
                   {format(parseISO(day.date), "EEE")}
-                </p>
+                </p> */}
                 <p className={`capitalize font-semibold ${colorClass}`}>
                   {day.description}
                 </p>
