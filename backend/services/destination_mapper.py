@@ -1,5 +1,8 @@
 import random
 
+from decouple import config
+from openai import OpenAI
+
 DESTINATIONS = {
     "beach": [
         {
@@ -516,3 +519,55 @@ def get_all_destinations():
         for dest in destinations:
             all_destinations.append({**dest, "scene_type": scene_type})
     return all_destinations
+
+
+def generate_scene_explanation(
+    scene_type: str, detected_scenes: list, use_api: bool = False
+) -> str:
+    """
+    Generate a basic or AI-generated explanation for a travel scene.
+
+    If use_api is True, tries to call OpenAI-compatible API (future support).
+    """
+    if not detected_scenes:
+        return "No scenes detected to describe."
+
+    scene_objects = ", ".join(detected_scenes[0:5])
+
+    if use_api:
+        try:
+            # Placeholder for OpenAI or OpenRouter integration
+            client = OpenAI(
+                api_key="your-api-key"
+            )  # Replace with config("OPENAI_API_KEY") or similar
+            prompt = f"""
+                Scene type: {scene_type}
+                Detected objects: {scene_objects}
+
+                Explain in 2–3 sentences why this image suggests a travel destination like {scene_type}.
+                Be descriptive and connect the visual elements to the destination choice.
+            """
+            response = client.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {
+                        "role": "system",
+                        "content": "You are an intelligent travel assistant.",
+                    },
+                    {"role": "user", "content": prompt},
+                ],
+                temperature=0.7,
+                max_tokens=120,
+            )
+            return response.choices[0].message.content.strip()
+        except Exception as e:
+            return f"AI explanation unavailable: {str(e)}"
+
+    # 🔁 Local Fallback (Basic Template-Based Logic)
+    template = (
+        f"This image suggests a travel destination related to {scene_type} "
+        f"because it contains elements like {scene_objects}. "
+        f"These features are typically found in places known for {scene_type.lower()} experiences."
+    )
+
+    return template

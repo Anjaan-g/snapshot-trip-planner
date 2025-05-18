@@ -4,7 +4,7 @@ import React, { useRef, useState, DragEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { UploadCloud, Sparkles } from "lucide-react";
+import { UploadCloud, Sparkles, CrossIcon, X } from "lucide-react";
 import { UploadResult } from "@/types/planner";
 
 interface Props {
@@ -13,7 +13,9 @@ interface Props {
   onRandom: () => void; // Added prop for random button click
   uploading: boolean;
   file: File | null;
+  setFile: (file: File | null) => void;
   result?: UploadResult | null;
+  setResult?: (result: UploadResult | null) => void;
 }
 
 export default function UploadForm({
@@ -22,7 +24,9 @@ export default function UploadForm({
   onRandom,
   uploading,
   file,
+  setFile,
   result,
+  setResult,
 }: Props) {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [dragOver, setDragOver] = useState(false);
@@ -58,6 +62,19 @@ export default function UploadForm({
   const handleDragLeave = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setDragOver(false);
+  };
+
+  const clearFile = () => {
+    setFile(null);
+    setPreview(null);
+    setResult?.(null);
+  };
+
+  const handleClear = () => {
+    if (inputRef.current) {
+      inputRef.current.value = ""; // clears native input
+    }
+    clearFile();
   };
 
   return (
@@ -106,10 +123,15 @@ export default function UploadForm({
               />
             </div>
             {result && (
-              <p className="mx-auto mt-2 text-gray-700 dark:text-gray-300">
-                <strong>Detected Scene: </strong>{" "}
-                {result.scene_type.toUpperCase()}
-              </p>
+              <>
+                <p className="mx-auto mt-2 text-gray-700 dark:text-gray-300">
+                  <strong>Detected Scene: </strong>{" "}
+                  {result.scene_type.toUpperCase()}
+                </p>
+                <p className="mx-auto mt-2 text-gray-700 dark:text-gray-300">
+                  <strong>Explanation: </strong> {result.scene_explanation}
+                </p>
+              </>
             )}
           </>
         )}
@@ -134,6 +156,16 @@ export default function UploadForm({
           <Sparkles />
           Suggest Random
         </Button>
+
+        {file && (
+          <Button
+            variant="outline"
+            onClick={handleClear}
+            className="text-sm text-red-500 hover:text-red-700"
+          >
+            ❌ Clear selection
+          </Button>
+        )}
       </div>
     </Card>
   );

@@ -2,7 +2,11 @@ import os
 
 from flask import Blueprint, jsonify, request
 from models.file_metadata import save_metadata
-from services.destination_mapper import get_destination, get_similar_destinations
+from services.destination_mapper import (
+    generate_scene_explanation,
+    get_destination,
+    get_similar_destinations,
+)
 from services.image_classifier import classify_scene
 from services.weather_service import get_weather_forecast
 from werkzeug.utils import secure_filename
@@ -28,15 +32,22 @@ def upload_file():
         filepath = os.path.join(UPLOAD_FOLDER, filename)
         file.save(filepath)
 
-        scene_type = classify_scene(filepath)
+        scene_type, tags = classify_scene(filepath)
         destination = get_destination(scene_type)
         similar = get_similar_destinations(scene_type, exclude=destination["name"])
+        try:
+            scene_explanation = generate_scene_explanation(scene_type, tags)
+        except Exception as e:
+            scene_explanation = "No explanation available"
+            print(f"Error generating scene explanation: {e}")
+
         weather = get_weather_forecast(destination["name"])
         save_metadata(filename, scene_type, destination["name"])
 
         return jsonify(
             {
                 "scene_type": scene_type,
+                "scene_explanation": scene_explanation,
                 "destination": destination,
                 "similar": similar,
                 "weather": weather,

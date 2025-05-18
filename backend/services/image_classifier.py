@@ -30,18 +30,22 @@ def classify_scene(image_path: str) -> str:
 
     if response.status_code != 200:
         print("Imagga API error:", response.status_code, response.text)
-        return "unknown"
+        return "unknown", []
     tags = response.json().get("result", {}).get("tags", [])
-    if not tags:
-        return "unknown"
+    label_list = [tag["tag"]["en"].lower() for tag in tags if tag["confidence"] >= 25]
 
+    scene_type = "unknown"
     for tag in tags:
         label = tag["tag"]["en"].lower()
         confidence = tag["confidence"]
         if confidence >= 35 and label in SCENE_LABELS:
-            return label
+            scene_type = label
+            break
 
-    return tags[0]["tag"]["en"] if tags else "unknown"
+    if scene_type == "unknown" and tags:
+        scene_type = tags[0]["tag"]["en"]
+
+    return scene_type, label_list
 
 
 # output = classify_scene("/home/sagar/Downloads/test.jpg")
