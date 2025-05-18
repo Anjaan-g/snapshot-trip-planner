@@ -124,7 +124,7 @@ export default function WeatherForecast({ forecast, unit = "metric" }: Props) {
   return (
     <Card className="bg-white max-w-4xl mx-auto border border-gray-200 text-gray-900 shadow-xl">
       <CardHeader>
-        <CardTitle>7-Day Weather Forecast</CardTitle>
+        <CardTitle>Week Weather Forecast</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="w-full h-64">
@@ -139,7 +139,7 @@ export default function WeatherForecast({ forecast, unit = "metric" }: Props) {
 
         {/* Icon/Label Grid */}
         <div
-          className="grid gap-2 mt-4 text-center max-w-3xl mx-8"
+          className="grid gap-4 mt-4 text-center max-w-4xl ms-8 px-4"
           style={{
             gridTemplateColumns: `repeat(${forecast.length}, minmax(0, 1fr))`,
           }}
