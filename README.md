@@ -12,7 +12,7 @@ AI-powered travel inspiration based on your uploaded photos. Built with:
 
 1. Upload a scenic photo (e.g., mountains, beaches, cities)
 2. AI detects the dominant **scene type**
-3. Suggests a travel destination based on the scene (randomly ranked)
+3. Suggests a travel destination based on the scene
 4. Shows a 7-day weather forecast for that destination (cached for 1 hour)
 5. Lets you explore 3 similar destinations ranked by relevance
 
