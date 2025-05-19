@@ -13,6 +13,7 @@ from werkzeug.utils import secure_filename
 
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
 UPLOAD_FOLDER = "./static/uploads"
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)  # Ensure the directory exists
 
 
 def allowed_file(filename):
