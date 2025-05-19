@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { UploadResult } from "@/types/planner";
@@ -19,6 +19,10 @@ export default function HomePage() {
   const [result, setResult] = useState<UploadResult | null>(null);
   const [unit, setUnit] = useState<"metric" | "imperial">("metric");
   const [showSimilar, setShowSimilar] = useState(false);
+  const similarRef = useRef<HTMLDivElement | null>(null);
+  const scrollToSimilar = () => {
+    similarRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   const handleUnitToggle = () => {
     setUnit((prev) => (prev === "metric" ? "imperial" : "metric"));
@@ -65,7 +69,7 @@ export default function HomePage() {
         onUpload={handleUpload}
         onRandom={handleRandom}
         result={result}
-		setResult={setResult}
+        setResult={setResult}
       />
 
       {/* Result or Loading */}
@@ -94,7 +98,10 @@ export default function HomePage() {
               data={result.destination}
               onShowMore={
                 result.similar?.length > 0
-                  ? () => setShowSimilar(true)
+                  ? () => {
+                      setShowSimilar(true);
+                      scrollToSimilar();
+                    }
                   : undefined
               }
             />
@@ -116,10 +123,12 @@ export default function HomePage() {
             )}
 
             {showSimilar && result?.similar?.length > 0 && (
-              <SimilarDestinations
-                destinations={result.similar}
-                scene={result.scene_type}
-              />
+              <div ref={similarRef}>
+                <SimilarDestinations
+                  destinations={result.similar}
+                  scene={result.scene_type}
+                />
+              </div>
             )}
           </motion.div>
         )}

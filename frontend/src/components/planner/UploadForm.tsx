@@ -16,6 +16,7 @@ interface Props {
   setFile: (file: File | null) => void;
   result?: UploadResult | null;
   setResult?: (result: UploadResult | null) => void;
+  onShowSimilar?: () => void;
 }
 
 export default function UploadForm({
@@ -27,6 +28,7 @@ export default function UploadForm({
   setFile,
   result,
   setResult,
+  onShowSimilar,
 }: Props) {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [dragOver, setDragOver] = useState(false);

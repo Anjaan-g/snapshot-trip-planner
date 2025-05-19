@@ -19,8 +19,11 @@ export default function SimilarDestinations({ destinations, scene }: Props) {
   }
 
   return (
-    <div className="mt-10 space-y-4 max-w-4xl mx-auto">
-      <h2 className="text-2xl font-bold bg-gradient-to-r from-pink-500 via-red-500 to-yellow-400 bg-clip-text text-transparent">
+    <div className="mt-10 space-y-4 max-w-4xl mx-auto animate-fade-in transition-opacity duration-500">
+      <h2
+        className="text-2xl font-bold text-white px-4 py-2 rounded-md relative inline-block z-10
+               bg-gradient-to-r from-pink-600 via-red-500 to-yellow-400 bg-opacity-80 shadow-md"
+      >
         Similar Destinations for <span className="capitalize">{scene}</span>{" "}
         scenes
       </h2>

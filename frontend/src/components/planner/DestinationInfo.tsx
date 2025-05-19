@@ -38,7 +38,7 @@ export default function DestinationInfo({ data, onShowMore }: Props) {
             <strong>Best time to visit:</strong> {data?.bestSeason}
           </p>
           <p>
-            <strong>Activities:</strong> {data?.activities.join(", ")}
+            <strong>Activities:</strong> {data?.activities?.join(", ")}
           </p>
           <div>
             <strong>Description:</strong>{" "}
