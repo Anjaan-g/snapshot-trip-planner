@@ -2,14 +2,28 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Destination } from "@/types/planner";
+import { useEffect, useRef } from "react";
 
 interface Props {
   destinations: Destination[];
   scene: string;
+  autoScroll?: boolean;
 }
 
-export default function SimilarDestinations({ destinations, scene }: Props) {
+export default function SimilarDestinations({
+  destinations,
+  scene,
+  autoScroll,
+}: Props) {
+  const ref = useRef<HTMLDivElement | null>(null);
   const sorted = [...destinations].sort((a, b) => a.rank - b.rank);
+
+  useEffect(() => {
+    if (autoScroll && ref.current) {
+      ref.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [autoScroll]);
+
   if (!destinations || destinations.length === 0) {
     return (
       <div className="mt-8 text-center text-sm text-gray-400">
@@ -19,7 +33,10 @@ export default function SimilarDestinations({ destinations, scene }: Props) {
   }
 
   return (
-    <div className="mt-10 space-y-4 max-w-4xl mx-auto animate-fade-in transition-opacity duration-500">
+    <div
+      ref={ref}
+      className="mt-10 space-y-4 max-w-4xl mx-auto animate-fade-in transition-opacity duration-500"
+    >
       <h2
         className="text-2xl font-bold text-white px-4 py-2 rounded-md relative inline-block z-10
                bg-gradient-to-r from-pink-600 via-red-500 to-yellow-400 bg-opacity-80 shadow-md"

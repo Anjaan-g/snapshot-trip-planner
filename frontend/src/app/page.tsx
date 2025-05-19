@@ -20,9 +20,6 @@ export default function HomePage() {
   const [unit, setUnit] = useState<"metric" | "imperial">("metric");
   const [showSimilar, setShowSimilar] = useState(false);
   const similarRef = useRef<HTMLDivElement | null>(null);
-  const scrollToSimilar = () => {
-    similarRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
 
   const handleUnitToggle = () => {
     setUnit((prev) => (prev === "metric" ? "imperial" : "metric"));
@@ -46,6 +43,8 @@ export default function HomePage() {
 
   const handleRandom = async () => {
     setUploading(true);
+    setFile(null);
+    setShowSimilar(false);
     setResult(null);
 
     try {
@@ -100,7 +99,6 @@ export default function HomePage() {
                 result.similar?.length > 0
                   ? () => {
                       setShowSimilar(true);
-                      scrollToSimilar();
                     }
                   : undefined
               }
@@ -127,6 +125,7 @@ export default function HomePage() {
                 <SimilarDestinations
                   destinations={result.similar}
                   scene={result.scene_type}
+                  autoScroll
                 />
               </div>
             )}
