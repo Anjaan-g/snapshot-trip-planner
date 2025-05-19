@@ -85,6 +85,13 @@ export default function UploadForm({
     clearFile();
   };
 
+  const handleContainerClick = () => {
+    // Only trigger click on the input if no file is selected
+    if (!file && inputRef.current) {
+      inputRef.current.click();
+    }
+  };
+
   return (
     <Card className="max-w-4xl mx-auto p-8 bg-white backdrop-blur-lg border border-white/20 rounded-2xl shadow-lg mt-5">
       <CardHeader className="text-center">
@@ -100,7 +107,7 @@ export default function UploadForm({
         onDrop={handleDrop}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
-        onClick={() => inputRef.current?.click()}
+        onClick={handleContainerClick}
         className={`relative cursor-pointer border-2 border-dashed rounded-lg p-6 max-w-4xl flex flex-col items-center justify-center text-gray-400 transition
           			${
                   dragOver
@@ -115,9 +122,10 @@ export default function UploadForm({
               type="file"
               accept="image/*"
               onChange={handleFileChange}
-              className="absolute inset-0 opacity-0 cursor-pointer"
+              className="hidden"
               aria-label="File upload"
             />
+            <UploadCloud size={36} className="mb-2" />
             <span>Drag & drop an image here, or click to select</span>
           </>
         ) : (
