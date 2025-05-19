@@ -88,6 +88,9 @@ export default function UploadForm({
 
   const handleContainerClick = () => {
     // Only trigger click on the input if no file is selected
+    setFile(null);
+    setPreview(null);
+    setResult?.(null);
     if (!file && inputRef.current) {
       inputRef.current.click();
     }
