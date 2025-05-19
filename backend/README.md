@@ -195,12 +195,13 @@ Runs on port 5000 inside container.
 
 ### 🧱 Future Enhancements
 
--   Redis caching of geolocation & weather results
+-   Redis caching of geolocation & weather results.
+-   Use S3 or other storages for persistent files like image uploads.
 
--   Use LLM to auto-generate destination descriptions
+-   Use LLM to auto-generate destination descriptions.
 
--   Support user accounts and trip planning
+-   Support user accounts and trip planning.
 
--   Replace Imagga with custom local scene model (e.g., CLIP/BLIP)
+-   Replace Imagga with custom local scene model (e.g., CLIP/BLIP).
 
--   Support reverse search: "Show me destinations like Iceland"
+-   Support reverse search: "Show me destinations like Iceland".

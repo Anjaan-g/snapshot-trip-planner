@@ -85,6 +85,8 @@ IMAGGA_AUTH=Basic <your-auth-header>
 
 ### Persistent Files
 
+Currently Files are not persisted on rebuilds. Upscaling step for this will be to use s3 for file storage and a dedicated database like RDS or a self-hosted runner with persistent capabilities.
+
 -   Uploaded images → `/static/uploads/`
 -   Metadata stored in `metadata.db` (SQLite)
 
