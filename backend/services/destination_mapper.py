@@ -1,3 +1,4 @@
+# fmt: off
 import random
 
 from decouple import config
@@ -485,6 +486,8 @@ DESTINATIONS = {
         },
     ],
 }
+
+# fmt: on
 
 
 def get_destination(scene_type: str) -> dict:

@@ -41,8 +41,7 @@ export default function SimilarDestinations({
         className="text-2xl font-bold text-white px-4 py-2 rounded-md relative inline-block z-10
                bg-gradient-to-r from-pink-600 via-red-500 to-yellow-400 bg-opacity-80 shadow-md"
       >
-        Similar Destinations for <span className="capitalize">{scene}</span>{" "}
-        scenes
+        Similar Destinations
       </h2>
 
       <div className="flex flex-col space-y-4">

@@ -28,7 +28,6 @@ export default function UploadForm({
   setFile,
   result,
   setResult,
-  onShowSimilar,
 }: Props) {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [dragOver, setDragOver] = useState(false);
@@ -156,7 +155,7 @@ export default function UploadForm({
       </div>
 
       <div className="mt-6 flex justify-center gap-4">
-        {!result && (
+        {(!result || file) && (
           <Button
             onClick={onUpload}
             disabled={uploading || !file || !!result}
