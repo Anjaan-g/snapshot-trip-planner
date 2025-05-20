@@ -540,9 +540,7 @@ def generate_scene_explanation(
     if use_api:
         try:
             # Placeholder for OpenAI or OpenRouter integration
-            client = OpenAI(
-                api_key="your-api-key"
-            )  # Replace with config("OPENAI_API_KEY") or similar
+            client = OpenAI(api_key=config("OPENAI_API_KEY"))
             prompt = f"""
                 Scene type: {scene_type}
                 Detected objects: {scene_objects}
